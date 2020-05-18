@@ -65,8 +65,8 @@ int main(int argc, char *argv[]) {
 		puts("sim server accept conn...");
 
 		for (i = 0; i < 10; i++) {
-			data[0] = i;
-			data[1] = 2*i;
+			data[0] = (double) i;
+			data[1] = 2*i+0.5;
 			data[2] = i*i;
 			data[3] = (int) time(NULL);
 			usleep(200*1000);
