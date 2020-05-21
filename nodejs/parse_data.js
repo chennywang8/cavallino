@@ -15,4 +15,4 @@ function parse_data(raw) {
     return data;
 }
 
-exports.parse_data = parse_data;
+module.exports = parse_data;

@@ -18,7 +18,7 @@ const client    = net.connect('/tmp/sim_socket', () => {
 });
 
 client.on('data', (raw) => {
-    simData = parse.parse_data(raw);
+    simData = parse(raw);
     console.log(`${simData} @ ${new Date(simData[3]*1000)}`);
 });
 

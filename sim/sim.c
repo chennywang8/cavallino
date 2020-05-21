@@ -72,8 +72,10 @@ int main(int argc, char *argv[]) {
 			usleep(200*1000);
 			if(write(cfd, data, sizeof(data))<0) 	break;
 		}
+		close(cfd);
 	}
 Error:
+	if (sfd>0)		close(sfd);
 	if (error<0)	puts(errMsg);
 	return error;
 }
