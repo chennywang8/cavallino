@@ -32,7 +32,7 @@ int zmq_res_initialize(void *context, char errorMsg[]) {
 	int 	error 	= 0;
 	ErrMsg	errMsg	= {0};
 
-	responder 	= zmq_socket(context, ZMQ_REP);
+	nullChk(responder = zmq_socket(context, ZMQ_REP));
 
 Error:
 	reportError();

@@ -9,11 +9,16 @@
 
 //==============================================================================
 // Constants
-#define SOCK_PATH 					"/tmp/sim_socket"
+#define OUT_OF_MEMORY 	-10001
 
 #ifndef errChk
 #define errChk(fCall) if (error = (fCall), error < 0) \
 {goto Error;} else
+#endif
+
+#ifndef nullChk
+#define nullChk(fCall) if ((fCall) == 0) \
+{error = OUT_OF_MEMORY; goto Error;} else
 #endif
 
 #define reportError()	if (error < 0)	sprintf(errorMsg, "%s->%s", __FUNCTION__, errMsg);

@@ -16,8 +16,9 @@ int main (void)
 	int			error 		= 0;
 	ErrMsg		errMsg		= {0};
 	CMD_Mode	mode		= 0;
+	void 		*context	= NULL;
 
-	void *context = zmq_ctx_new();
+	nullChk(context = zmq_ctx_new());
 	errChk(zmq_res_initialize(context, errMsg));
 	while(1) {
 		errChk(zmq_res_fetch(&mode, errMsg));
@@ -44,5 +45,6 @@ int main (void)
 	}
 Error:
 	zmq_res_close(errMsg);
+	if (context)	zmq_ctx_shutdown(context);
 	return error;
 }
