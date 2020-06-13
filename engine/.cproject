@@ -26,7 +26,10 @@
 								<option id="gnu.c.compiler.option.misc.verbose.479548461" name="Verbose (-v)" superClass="gnu.c.compiler.option.misc.verbose" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="gnu.c.compiler.option.misc.pic.207453437" name="Position Independent Code (-fPIC)" superClass="gnu.c.compiler.option.misc.pic" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="gnu.c.compiler.option.misc.other.2062189806" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 --sysroot=&quot;C:\build\17.0\arm\sysroots\cortexa9-vfpv3-nilrt-linux-gnueabi&quot; -mfpu=vfp3 -mfloat-abi=softfp" valueType="string"/>
-								<option id="gnu.c.compiler.option.include.paths.1872778549" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath"/>
+								<option id="gnu.c.compiler.option.include.paths.1872778549" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;C:\build\17.0\arm\sysroots\cortexa9-vfpv3-nilrt-linux-gnueabi\usr\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.911057125" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1574125758" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">

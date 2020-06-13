@@ -8,26 +8,41 @@
  ============================================================================
  */
 
-#include <zmq.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <assert.h>
+#include "engine.h"
+
 
 int main (void)
 {
-    //  Socket to talk to clients
-    void *context = zmq_ctx_new ();
-    void *responder = zmq_socket (context, ZMQ_REP);
-    int rc = zmq_bind (responder, "tcp://*:5555");
-    assert (rc == 0);
+	int			error 		= 0;
+	ErrMsg		errMsg		= {0};
+	CMD_Mode	mode		= 0;
 
-    while (1) {
-        char buffer [10];
-        zmq_recv (responder, buffer, 10, 0);
-        printf ("Received Hello\n");
-        sleep (1);          //  Do some 'work'
-        zmq_send (responder, "World", 5, 0);
-    }
-    return 0;
+	void *context = zmq_ctx_new();
+	errChk(zmq_res_initialize(context, errMsg));
+	while(1) {
+		errChk(zmq_res_fetch(&mode, errMsg));
+		switch(mode) {
+		case cmd_start: // start fpga
+
+			break;
+		case cmd_shutdown:
+			goto Error;
+			break;
+		case cmd_set_rate:
+
+			break;
+		case cmd_pause:
+
+			break;
+		case cmd_dma_fifo:
+
+			break;
+		default:
+
+			break;
+		}
+	}
+Error:
+	zmq_res_close(errMsg);
+	return error;
 }
