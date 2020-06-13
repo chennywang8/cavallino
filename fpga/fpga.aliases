@@ -1,0 +1,9 @@
+[Cavallino]
+Cavallino = "172.22.11.2"
+
+[DYNO]
+DYNO = "192.168.1.100"
+
+[My Computer]
+My Computer = "192.168.175.209"
+
