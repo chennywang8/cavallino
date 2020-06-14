@@ -8,7 +8,7 @@ let   fpga_data = [0, 0, 0, 0];
 // ZMQ-REQUESTER
 const requester = zmq.socket('req');
 requester.on('message', data => {
-    console.log('received response - ', data.readInt32LE(0));
+    console.log('received response: ', data.readInt32LE(0));
 });
 
 // connect to responder
@@ -37,9 +37,9 @@ requester.send(data);
 
 const timer1 = setTimeout(() => {
     data[0] = 2;                // read poll rate
-    data.writeInt32LE(200, 1);  // set pollrate
+    data.writeInt32BE(200, 1);  // set pollrate
     requester.send(data);
-}, 10000); // wait 5 sec
+}, 5000); // wait 5 sec
 
 const timer2 = setTimeout(() => {
     data[0] = 1; // shutdown daemon
