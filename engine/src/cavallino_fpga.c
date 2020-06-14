@@ -83,10 +83,10 @@ void* fpga_publishData(void *fpgaSetup) {
 
 	sleep(1);
 	while(!fpga->terminate) {
-		usleep(1000*fpga->pollPeriodMs);
+		usleep(1000*fpga->pollPeriodMs); /*
 		errChk(NiFpga_ReadArrayU16(fpga->session,
 				NiFpga_cavallino_IndicatorArrayU16_raw,
-				buffer, bufSize));
+				buffer, bufSize)); */
 		errChk(zmq_send(fpga->publisher, buffer, bufSize, 0));
 	}
 Error:

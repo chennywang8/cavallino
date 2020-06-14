@@ -54,7 +54,7 @@ int main (void)
 			}
 			break;
 		case cmd_shutdown:
-			puts("shutting down server...");
+			puts("server shutting down...");
 			fpga.terminate = 1;
 			goto Error;
 			break;
@@ -85,9 +85,11 @@ int main (void)
 Error:
 	fpga_close(&fpga);
 	engine_close(&zmq);
-	if (error < 0) printf("error: %d; \nmessage: %s\n", error, errMsg);
-	if (fpga.error)printf("publisher: %d; \nmessage: %s\n", fpga.error, fpga.errMsg);
-	puts("server stopped...");
+	if (error < 0)
+		printf("error: %d; \nmessage: %s\n", error, errMsg);
+	if (fpga.error < 0)
+		printf("publisher: %d; \nmessage: %s\n", fpga.error, fpga.errMsg);
+	puts("server stopped...\n---------------\n");
 	return error;
 }
 
