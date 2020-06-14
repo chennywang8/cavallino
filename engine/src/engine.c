@@ -75,6 +75,8 @@ int main (void)
 Error:
 	fpga_close(&fpga);
 	engine_close(&zmq);
+	if (error < 0) printf("error: %d; message: %s", error, errMsg);
+	if (fpga.error)printf("publisher: %d; message: %s", fpga.error, fpga.errMsg);
 	return error;
 }
 
@@ -95,7 +97,7 @@ int engine_initialize(MSG_ZMQ *zmq, char errorMsg[]) {
 	nullChk(zmq->socData = zmq_socket(zmq->con, ZMQ_PUB));
 	errChk(zmq_bind(zmq->socData, CAVALLINO_PUBLISHER));
 
-	puts("cavallino engine start...\n");
+	puts("===============\ncavallino engine start...\n===============");
 Error:
 	reportError();
 	return error;
