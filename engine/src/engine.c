@@ -75,8 +75,8 @@ int main (void)
 Error:
 	fpga_close(&fpga);
 	engine_close(&zmq);
-	if (error < 0) printf("error: %d; message: %s", error, errMsg);
-	if (fpga.error)printf("publisher: %d; message: %s", fpga.error, fpga.errMsg);
+	if (error < 0) printf("error: %d; \nmessage: %s\n", error, errMsg);
+	if (fpga.error)printf("publisher: %d; \nmessage: %s\n", fpga.error, fpga.errMsg);
 	return error;
 }
 
