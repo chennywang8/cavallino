@@ -34,6 +34,7 @@ int engine_listenRequest(void *socket, MSG_CMD *cmd, char errorMsg[]);
 int main (void)
 {
 	int			error 		= 0;
+	int			rep[2]		= {0};
 	ErrMsg		errMsg		= {0};
 	MSG_CMD		cmd			= {};
 	MSG_ZMQ		zmq			= {};
@@ -42,9 +43,10 @@ int main (void)
 	errChk(engine_initialize(&zmq, errMsg));
 	fpga.publisher 			= zmq.socData;
 	fpga.pollPeriodMs 		= 1000;
-	errChk(fpga_initialize(&fpga, errMsg));
+
 	while(1) {
 		errChk(engine_listenRequest(zmq.socCmd, &cmd, errMsg));
+		rep[1] = time(NULL);	// get current timestamp
 		switch(cmd.mode) {
 		case cmd_start: // start fpga
 			if (fpga.started) {
@@ -80,7 +82,8 @@ int main (void)
 
 			break;
 		}
-		errChk(zmq_send(zmq.socCmd, (void *)&error, sizeof(error), 0));
+		rep[0] = error;
+		errChk(zmq_send(zmq.socCmd, (void *)rep, sizeof(rep), 0));
 	}
 Error:
 	fpga_close(&fpga);

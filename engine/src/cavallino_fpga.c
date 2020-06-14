@@ -11,7 +11,7 @@
 
 //==============================================================================
 // Constants
-
+#define FPGA_TARGET 	"RIO0" // normally this won't be changed
 
 //==============================================================================
 // Types
@@ -19,7 +19,7 @@
 
 //==============================================================================
 // Static functions
-void* fpga_publishData(void *fpgaSetting);
+void* fpga_publishData(void *fpgaSetup);
 
 //==============================================================================
 // Global functions
@@ -33,16 +33,18 @@ int fpga_initialize(FPGA_Setup *fpga, char errorMsg[]) {
 		sprintf(errMsg, "fpga file %s does not exist", bitFile);
 		errChk(FILE_NOT_FOUND);
 	}
+	// always invoke this function at the very beginning
 	error = NiFpga_Initialize();
 	if (error < 0) {
 		strcpy(errMsg, "fpga initialization failed");
 		errChk(FPGA_INITIALIZATION_FAILURE);
 	}
-	// get reference for fpga target
+	// get reference for FPGA target
 	errChk(NiFpga_Open(bitFile, NiFpga_cavallino_Signature,
-			FPGA_TARGET_CAVALLINO, 0, &fpga->session));
-	// start fpga target
+			FPGA_TARGET, 0, &fpga->session));
+	// start fpga target to access FPGA IO
 	errChk(NiFpga_Run(fpga->session, 0));
+
 	// --------------------------------------------
 	// launch new thread to poll data from FPGA to shared memory
 	error = pthread_create(&fpga->threadId, NULL,
@@ -76,18 +78,22 @@ int fpga_close(FPGA_Setup *fpga) {
 
 // ----------- PUBLISH DATA ----------
 void* fpga_publishData(void *fpgaSetup) {
-	int 		error 	= 0,
-				bufSize = sizeof(uint16_t)*FPGA_DATA_SIZE;
+	int 		error 	= 0;
 	FPGA_Setup 	*fpga	= (FPGA_Setup*) fpgaSetup;
-	uint16_t	buffer[FPGA_DATA_SIZE]	= {0};
+	uint16_t	buffer[NiFpga_cavallino_IndicatorArrayU16Size_raw]	= {0};
 
 	sleep(1);
 	while(!fpga->terminate) {
-		usleep(1000*fpga->pollPeriodMs); /*
+		usleep(1000*fpga->pollPeriodMs);
+		// ---------------------------------
+		// use array length instead array size, be careful!!!
 		errChk(NiFpga_ReadArrayU16(fpga->session,
 				NiFpga_cavallino_IndicatorArrayU16_raw,
-				buffer, bufSize)); */
-		errChk(zmq_send(fpga->publisher, buffer, bufSize, 0));
+				buffer, NiFpga_cavallino_IndicatorArrayU16Size_raw));
+		// ---------------------------------
+		// use array size
+		errChk(zmq_send(fpga->publisher, buffer, sizeof(buffer), 0));
+		printf("%d, %d, %d, %d\n", buffer[0], buffer[1], buffer[2], buffer[3]);
 	}
 Error:
 	fpga->error = error;

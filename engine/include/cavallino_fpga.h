@@ -19,8 +19,7 @@
 
 //==============================================================================
 // Constants
-#define FPGA_TARGET_CAVALLINO 	"RIO0"
-#define FPGA_DATA_SIZE			NiFpga_cavallino_IndicatorArrayU16Size_raw
+
 
 //==============================================================================
 // Types

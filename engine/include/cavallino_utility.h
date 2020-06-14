@@ -16,7 +16,7 @@
 // Include files
 #include <stdio.h>
 #include <unistd.h>
-#include <sys/un.h>
+#include <string.h>
 #include <zmq.h>
 #include <time.h>
 
