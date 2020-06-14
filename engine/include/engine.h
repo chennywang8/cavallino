@@ -35,7 +35,7 @@ typedef enum {
 
 typedef struct {
 	CMD_Mode		mode;
-	int				data;
+	unsigned int	data;
 	unsigned char	raw[BUFFER_SIZE];
 } MSG_CMD;
 

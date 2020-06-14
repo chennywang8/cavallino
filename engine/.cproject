@@ -23,11 +23,11 @@
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.279965527" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.1016766139" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.dialect.std.156488403" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.misc.verbose.479548461" name="Verbose (-v)" superClass="gnu.c.compiler.option.misc.verbose" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-								<option id="gnu.c.compiler.option.misc.pic.207453437" name="Position Independent Code (-fPIC)" superClass="gnu.c.compiler.option.misc.pic" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-								<option id="gnu.c.compiler.option.misc.other.2062189806" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 --sysroot=&quot;C:\build\18.0\sysroots\cortexa9-vfpv3-nilrt-linux-gnueabi&quot; -mfpu=vfp3 -mfloat-abi=softfp" valueType="string"/>
+								<option id="gnu.c.compiler.option.misc.verbose.479548461" name="Verbose (-v)" superClass="gnu.c.compiler.option.misc.verbose" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.misc.pic.207453437" name="Position Independent Code (-fPIC)" superClass="gnu.c.compiler.option.misc.pic" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.misc.other.2062189806" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 -mfpu=vfp3 -mfloat-abi=softfp --sysroot=&quot;C:\build\18.0\sysroots\cortexa9-vfpv3-nilrt-linux-gnueabi&quot;" valueType="string"/>
 								<option id="gnu.c.compiler.option.include.paths.1872778549" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;C:\build\17.0\arm\sysroots\cortexa9-vfpv3-nilrt-linux-gnueabi\usr\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\build\18.0\sysroots\cortexa9-vfpv3-nilrt-linux-gnueabi\usr\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/fpga}&quot;"/>
 								</option>
@@ -41,8 +41,8 @@
 								<option id="gnu.c.link.option.ldflags.78717406" name="Linker flags" superClass="gnu.c.link.option.ldflags" value="--sysroot=&quot;C:\build\18.0\sysroots\cortexa9-vfpv3-nilrt-linux-gnueabi&quot;" valueType="string"/>
 								<option id="gnu.c.link.option.libs.1884593357" name="Libraries (-l)" superClass="gnu.c.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="dl"/>
-									<listOptionValue builtIn="false" value="zmq"/>
 									<listOptionValue builtIn="false" value="pthread"/>
+									<listOptionValue builtIn="false" value="zmq"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.1148463063" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -134,4 +134,5 @@
 			<resource resourceType="PROJECT" workspacePath="/engine"/>
 		</configuration>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>
