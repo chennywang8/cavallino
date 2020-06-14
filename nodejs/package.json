@@ -1,0 +1,14 @@
+{
+  "name": "cavallino",
+  "version": "1.0.0",
+  "description": "cavallino",
+  "main": "zmq_client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chenny Wang",
+  "license": "ISC",
+  "dependencies": {
+    "zeromq": "^5.2.0"
+  }
+}
