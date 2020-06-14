@@ -42,18 +42,24 @@ int main (void)
 	errChk(engine_initialize(&zmq, errMsg));
 	fpga.publisher 			= zmq.socData;
 	fpga.pollPeriodMs 		= 1000;
-
+	errChk(fpga_initialize(&fpga, errMsg));
 	while(1) {
 		errChk(engine_listenRequest(zmq.socCmd, &cmd, errMsg));
 		switch(cmd.mode) {
 		case cmd_start: // start fpga
-			errChk(fpga_initialize(&fpga, errMsg));
+			if (fpga.started) {
+				puts("server has been started...");
+			} else {
+				errChk(fpga_initialize(&fpga, errMsg));
+			}
 			break;
 		case cmd_shutdown:
+			puts("shutting down server...");
 			fpga.terminate = 1;
 			goto Error;
 			break;
 		case cmd_set_rate:
+			printf("set polling rate %dms\n", cmd.data);
 			if (cmd.data>0) {
 				error = fpga.pollPeriodMs = cmd.data;
 			} else {
@@ -61,10 +67,14 @@ int main (void)
 			}
 			break;
 		case cmd_get_rate:
+			printf("get polling rate %dms\n", fpga.pollPeriodMs);
 			error = fpga.pollPeriodMs;
 			break;
 		case cmd_dma_fifo:
-			error = cmd.data;
+			printf("write dma fifo: %u\n", cmd.data);
+			error = (int) cmd.data;
+			errChk(NiFpga_WriteFifoU32(fpga.session, NiFpga_cavallino_HostToTargetFifoU32_FIFO_CMD,
+					&cmd.data, 1, -1, NULL));
 			break;
 		default:
 
@@ -77,6 +87,7 @@ Error:
 	engine_close(&zmq);
 	if (error < 0) printf("error: %d; \nmessage: %s\n", error, errMsg);
 	if (fpga.error)printf("publisher: %d; \nmessage: %s\n", fpga.error, fpga.errMsg);
+	puts("server stopped...");
 	return error;
 }
 

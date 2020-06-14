@@ -26,6 +26,7 @@
 // Types
 typedef struct {
 	char 			terminate;
+	char			started;
 	int				pollPeriodMs;
 	NiFpga_Session	session;
 	pthread_t		threadId;

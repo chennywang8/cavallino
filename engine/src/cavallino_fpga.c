@@ -52,6 +52,7 @@ int fpga_initialize(FPGA_Setup *fpga, char errorMsg[]) {
 		errChk(PTHREAD_CREATION_FAILURE);
 	}
 
+	fpga->started = 1;
 	puts("start fpga server...");
 Error:
 	reportError();
@@ -68,6 +69,7 @@ int fpga_close(FPGA_Setup *fpga) {
 		NiFpga_Close(fpga->session, 0);
 	}
 	NiFpga_Finalize();
+	fpga->started = 0;
 	return 0;
 }
 
@@ -76,8 +78,8 @@ int fpga_close(FPGA_Setup *fpga) {
 void* fpga_publishData(void *fpgaSetup) {
 	int 		error 	= 0,
 				bufSize = sizeof(uint16_t)*FPGA_DATA_SIZE;
-	uint16_t	buffer[FPGA_DATA_SIZE]	= {0};
 	FPGA_Setup 	*fpga	= (FPGA_Setup*) fpgaSetup;
+	uint16_t	buffer[FPGA_DATA_SIZE]	= {0};
 
 	sleep(1);
 	while(!fpga->terminate) {
