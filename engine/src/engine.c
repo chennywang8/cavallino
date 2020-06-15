@@ -34,8 +34,8 @@ int engine_listenRequest(void *socket, MSG_CMD *cmd, char errorMsg[]);
 // Global functions
 int main (void)
 {
-	int			error 		= 0;
-	int			rep[2]		= {0};
+	int			error 		= 0,
+				rep[2]		= {0};
 	ErrMsg		errMsg		= {0};
 	MSG_CMD		cmd			= {};
 	MSG_ZMQ		zmq			= {};
@@ -52,8 +52,10 @@ int main (void)
 		case cmd_start: // start fpga
 			if (fpga.started) {
 				puts("server has been started...");
+				rep[0] = -1;
 			} else {
 				errChk(fpga_initialize(&fpga, errMsg));
+				rep[0] = error;
 			}
 			break;
 		case cmd_shutdown:
@@ -64,28 +66,28 @@ int main (void)
 		case cmd_set_rate:
 			printf("set polling rate %dms\n", cmd.data);
 			if (cmd.data>0) {
-				error = fpga.pollPeriodMs = cmd.data;
+				rep[0] = fpga.pollPeriodMs = cmd.data;
 			} else {
-
+				rep[0] = -999;
 			}
 			break;
 		case cmd_get_rate:
 			printf("get polling rate %dms\n", fpga.pollPeriodMs);
-			error = fpga.pollPeriodMs;
+			rep[0] = fpga.pollPeriodMs;
 			break;
 		case cmd_dma_fifo:
-			printf("write dma fifo: %u; cmd: %d-%d-%d\n",
-					cmd.data, cmd.raw[4], cmd.raw[3], U16(cmd.raw[2], cmd.raw[1]));
-			error = (int) cmd.raw[4];
+			printf("write dma-fifo: %u; cmd: %s(%d)-%d-%d\n",
+					cmd.data, FIFO_Cmd[cmd.raw[4]], cmd.raw[4],
+					cmd.raw[3], U16(cmd.raw[2], cmd.raw[1]));
+			rep[0] = (int) cmd.raw[4];
 			errChk(NiFpga_WriteFifoU32(fpga.session,
 					NiFpga_cavallino_HostToTargetFifoU32_FIFO_CMD,
 					&cmd.data, 1, -1, NULL));
 			break;
 		default:
-
+			rep[0] = -1;
 			break;
 		}
-		rep[0] = error;
 		errChk(zmq_send(zmq.socCmd, (void *)rep, sizeof(rep), 0));
 	}
 Error:

@@ -36,7 +36,13 @@ typedef struct {
 
 //==============================================================================
 // Static functions
-
+static char *FIFO_Cmd[] = {
+	"NOPE",
+	"set_register",
+	"flush_fifo_data",
+	"TBD",
+	"set_led"
+};
 
 //==============================================================================
 // Global functions
