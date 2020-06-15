@@ -51,7 +51,7 @@ int main (void)
 		switch(cmd.mode) {
 		case cmd_start: // start fpga
 			if (fpga.started) {
-				puts("server has been started...");
+				strcpy(errMsg, "Server has been started already");
 				rep[0] = -1;
 			} else {
 				errChk(fpga_initialize(&fpga, errMsg));
@@ -59,12 +59,12 @@ int main (void)
 			}
 			break;
 		case cmd_shutdown:
-			puts("server shutting down...");
+			syslog(LOG_DEBUG, "Server shutting down...");
 			fpga.terminate = 1;
 			goto Error;
 			break;
 		case cmd_set_rate:
-			printf("set polling rate %dms\n", cmd.data);
+			sprintf(errMsg, "Set polling rate %dms\n", cmd.data);
 			if (cmd.data>0) {
 				rep[0] = fpga.pollPeriodMs = cmd.data;
 			} else {
@@ -72,11 +72,11 @@ int main (void)
 			}
 			break;
 		case cmd_get_rate:
-			printf("get polling rate %dms\n", fpga.pollPeriodMs);
+			sprintf(errMsg, "Get polling rate %dms\n", fpga.pollPeriodMs);
 			rep[0] = fpga.pollPeriodMs;
 			break;
 		case cmd_dma_fifo:
-			printf("write dma-fifo: %u; cmd: %s(%d)-%d-%d\n",
+			sprintf(errMsg, "Write dma-fifo: %u; cmd: %s(%d)-%d-%d\n",
 					cmd.data, FIFO_Cmd[cmd.raw[4]], cmd.raw[4],
 					cmd.raw[3], U16(cmd.raw[2], cmd.raw[1]));
 			rep[0] = (int) cmd.raw[4];
@@ -86,18 +86,17 @@ int main (void)
 			break;
 		default:
 			rep[0] = -1;
+			sprintf(errMsg, "Invalid request(%d)", cmd.mode);
 			break;
 		}
+		if (*errMsg)	syslog(LOG_DEBUG, errMsg);
 		errChk(zmq_send(zmq.socCmd, (void *)rep, sizeof(rep), 0));
 	}
 Error:
 	fpga_close(&fpga);
+	utility_logError(error, errMsg);
+	utility_logError(fpga.error, fpga.errMsg);
 	engine_close(&zmq);
-	if (error < 0)
-		printf("error: %d; \nmessage: %s\n", error, errMsg);
-	if (fpga.error < 0)
-		printf("publisher: %d; \nmessage: %s\n", fpga.error, fpga.errMsg);
-	puts("server stopped...\n---------------\n");
 	return error;
 }
 
@@ -110,6 +109,9 @@ int engine_initialize(MSG_ZMQ *zmq, char errorMsg[]) {
 	int		error 	= 0;
 	ErrMsg	errMsg	= {0};
 
+	// start syslog
+	openlog("cavallino", LOG_PERROR|LOG_PID, LOG_USER);
+	// new zmq context
 	nullChk(zmq->con = zmq_ctx_new());
 	// open socket for responder
 	nullChk(zmq->socCmd = zmq_socket(zmq->con, ZMQ_REP));
@@ -120,7 +122,7 @@ int engine_initialize(MSG_ZMQ *zmq, char errorMsg[]) {
 	// open socket for publisher - dma fifo data
 	nullChk(zmq->socDma = zmq_socket(zmq->con, ZMQ_PUB));
 	errChk(zmq_bind(zmq->socDma, CAVALLINO_FIFODATA));
-	puts("===============\ncavallino engine start...\n===============");
+	syslog(LOG_INFO, "Cavallino engine started.");
 Error:
 	reportError();
 	return error;
@@ -138,6 +140,9 @@ int engine_close(MSG_ZMQ *zmq) {
 		zmq_close(zmq->socDma);
 	if (zmq->con)
 		zmq_ctx_shutdown(zmq->con);
+	syslog(LOG_INFO, "Cavallino engine stopped.");
+	// stop syslog
+	closelog();
 	return 0;
 }
 

@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <syslog.h>
 #include <zmq.h>
 #include <time.h>
 
@@ -63,7 +64,7 @@ typedef char 			ErrMsg[ERRMSG_SIZE];
 
 //==============================================================================
 // Global functions
-
+int utility_logError(int error, const char *errorMsg);
 
 #ifdef __cplusplus
     }

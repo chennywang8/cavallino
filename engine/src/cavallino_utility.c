@@ -7,7 +7,7 @@
 
 //==============================================================================
 // Include files
-
+#include "cavallino_utility.h"
 
 //==============================================================================
 // Constants
@@ -23,5 +23,11 @@
 
 //==============================================================================
 // Global functions
-
+int utility_logError(int error, const char *errorMsg) {
+	if (error < 0) {
+		syslog(LOG_ERR, errorMsg);
+		printf("error: %d; \nmessage: %s\n", error, errorMsg);
+	}
+	return error;
+}
 

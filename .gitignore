@@ -3,3 +3,5 @@
 .metadata
 RemoteSystemsTempFiles
 nodejs/node_modules
+*.lvlps
+*.aliases

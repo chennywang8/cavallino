@@ -36,7 +36,7 @@ typedef struct {
 
 //==============================================================================
 // Static functions
-static char *FIFO_Cmd[] = {
+static const char *FIFO_Cmd[] = {
 	"NOPE",
 	"set_register",
 	"flush_fifo_data",

@@ -56,7 +56,7 @@ int fpga_initialize(FPGA_Setup *fpga, char errorMsg[]) {
 	}
 
 	fpga->started = 1;
-	puts("start fpga server...");
+	syslog(LOG_DEBUG, "FPGA connected");
 Error:
 	reportError();
 	return error;
@@ -97,7 +97,7 @@ void* fpga_publishData(void *fpgaSetup) {
 		printf("%d, %d, %d, %d\n", buffer[0], buffer[1], buffer[2], buffer[3]);
 	}
 Error:
-	fpga->error = error;
+	fpga->error = utility_logError(error, __FUNCTION__);
 	return (void*) &fpga->error;
 }
 
@@ -116,6 +116,6 @@ void* fpga_publishDmaFifoData(void *fpgaSetup) {
 		errChk(zmq_send(fpga->publisher, buffer, sizeof(buffer), 0));
 	}
 Error:
-	fpga->error = error;
+	fpga->error = utility_logError(error, __FUNCTION__);
 	return (void*) &fpga->error;
 }
