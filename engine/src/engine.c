@@ -20,6 +20,7 @@ typedef struct {
 	void *con;
 	void *socCmd;
 	void *socData;
+	void *socDma;
 } MSG_ZMQ;
 
 
@@ -73,9 +74,11 @@ int main (void)
 			error = fpga.pollPeriodMs;
 			break;
 		case cmd_dma_fifo:
-			printf("write dma fifo: %u\n", cmd.data);
-			error = (int) cmd.data;
-			errChk(NiFpga_WriteFifoU32(fpga.session, NiFpga_cavallino_HostToTargetFifoU32_FIFO_CMD,
+			printf("write dma fifo: %u; cmd: %d-%d-%d\n",
+					cmd.data, cmd.raw[4], cmd.raw[3], U16(cmd.raw[2], cmd.raw[1]));
+			error = (int) cmd.raw[4];
+			errChk(NiFpga_WriteFifoU32(fpga.session,
+					NiFpga_cavallino_HostToTargetFifoU32_FIFO_CMD,
 					&cmd.data, 1, -1, NULL));
 			break;
 		default:
@@ -112,7 +115,9 @@ int engine_initialize(MSG_ZMQ *zmq, char errorMsg[]) {
 	// open socket for publisher
 	nullChk(zmq->socData = zmq_socket(zmq->con, ZMQ_PUB));
 	errChk(zmq_bind(zmq->socData, CAVALLINO_PUBLISHER));
-
+	// open socket for publisher - dma fifo data
+	nullChk(zmq->socDma = zmq_socket(zmq->con, ZMQ_PUB));
+	errChk(zmq_bind(zmq->socDma, CAVALLINO_FIFODATA));
 	puts("===============\ncavallino engine start...\n===============");
 Error:
 	reportError();
@@ -127,6 +132,8 @@ int engine_close(MSG_ZMQ *zmq) {
 		zmq_close(zmq->socData);
 	if (zmq->socCmd)
 		zmq_close(zmq->socCmd);
+	if (zmq->socDma)
+		zmq_close(zmq->socDma);
 	if (zmq->con)
 		zmq_ctx_shutdown(zmq->con);
 	return 0;
@@ -143,7 +150,8 @@ int engine_listenRequest(void *socket, MSG_CMD *cmd, char errorMsg[]){
 	errChk(zmq_recv(socket, cmd->raw, BUFFER_SIZE, 0));
 	cmd->mode = (CMD_Mode) cmd->raw[0];
 	if (error>1) {
-		cmd->data = U32(cmd->raw[1], cmd->raw[2], cmd->raw[3], cmd->raw[4]);
+		// small-endian order
+		cmd->data = U32(cmd->raw[4], cmd->raw[3], cmd->raw[2], cmd->raw[1]);
 	}
 Error:
 	reportError();

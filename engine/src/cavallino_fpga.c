@@ -20,6 +20,7 @@
 //==============================================================================
 // Static functions
 void* fpga_publishData(void *fpgaSetup);
+void* fpga_publishDmaFifoData(void *fpgaSetup);
 
 //==============================================================================
 // Global functions
@@ -94,6 +95,25 @@ void* fpga_publishData(void *fpgaSetup) {
 		// use array size
 		errChk(zmq_send(fpga->publisher, buffer, sizeof(buffer), 0));
 		printf("%d, %d, %d, %d\n", buffer[0], buffer[1], buffer[2], buffer[3]);
+	}
+Error:
+	fpga->error = error;
+	return (void*) &fpga->error;
+}
+
+
+// ------------- PUBLISH DMA FIFO DATA ---------
+void* fpga_publishDmaFifoData(void *fpgaSetup) {
+	int 		error 				= 0;
+	size_t		elementsRemaining 	= 0;
+	FPGA_Setup 	*fpga				= (FPGA_Setup*) fpgaSetup;
+	uint16_t	buffer[4] 			= {0};
+
+	while(!fpga->terminate) {
+		errChk(NiFpga_ReadFifoU16(fpga->session,
+				NiFpga_cavallino_TargetToHostFifoU16_FIFO_DATA,
+				buffer, 4, -1, &elementsRemaining));
+		errChk(zmq_send(fpga->publisher, buffer, sizeof(buffer), 0));
 	}
 Error:
 	fpga->error = error;

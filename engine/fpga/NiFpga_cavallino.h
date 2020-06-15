@@ -23,7 +23,7 @@
 /**
  * The signature of the FPGA bitfile.
  */
-static const char* const NiFpga_cavallino_Signature = "A2CD6768EB9315F9365956AF756CED10";
+static const char* const NiFpga_cavallino_Signature = "2BAFC20D8C4AC52372F85B208F841DEC";
 
 #if NiFpga_Cpp
 extern "C"

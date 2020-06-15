@@ -47,7 +47,7 @@
 #define reportError()	if (error < 0)	sprintf(errorMsg, "%s->%s", __FUNCTION__, errMsg);
 
 #define ERRMSG_SIZE     512
-#define U16(h,l)    	(((u16)(h)<<8)|((u16)(l)&0x00FFU))      // pack bytes into Uint16 word
+#define U16(h,l)    	(((uint16_t)(h)<<8)|((uint16_t)(l)&0x00FFU))      // pack bytes into Uint16 word
 #define U32(a, b, c, d)    \
     (((uint32_t)(a)<<24) | ((uint32_t)((b) & 0xFFU)<<16) | \
      ((uint32_t)((c) & 0xFFU)<<8) | ((uint32_t)((d) & 0xFFU)<<0))

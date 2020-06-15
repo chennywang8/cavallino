@@ -20,6 +20,7 @@
 // Constants
 #define CAVALLINO_RESPONDER		"tcp://*:14538"
 #define CAVALLINO_PUBLISHER		"tcp://*:14537"
+#define CAVALLINO_FIFODATA		"tcp://*:14535"
 
 #define BUFFER_SIZE		10
 
