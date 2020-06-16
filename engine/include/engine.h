@@ -15,6 +15,7 @@
 // Include files
 #include "cavallino_utility.h"
 #include "cavallino_fpga.h"
+#include "instrument_lan.h"
 
 //==============================================================================
 // Constants
@@ -22,7 +23,8 @@
 #define CAVALLINO_PUBLISHER		"tcp://*:14537"
 #define CAVALLINO_FIFODATA		"tcp://*:14535"
 
-#define BUFFER_SIZE		10
+#define BUFFER_SIZE				10
+#define INSTRUMENT_IP_ADDRESS	"192.168.1.90"
 
 //==============================================================================
 // Types
@@ -32,6 +34,7 @@ typedef enum {
 	cmd_set_rate	= 2,
 	cmd_get_rate	= 3,
 	cmd_dma_fifo	= 4,
+	cmd_query_instr = 5,
 } CMD_Mode;
 
 typedef struct {

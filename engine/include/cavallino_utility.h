@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <syslog.h>
+#include <stdlib.h>
 #include <zmq.h>
 #include <time.h>
 
