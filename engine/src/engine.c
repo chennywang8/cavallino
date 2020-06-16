@@ -59,9 +59,8 @@ int main (void)
 			}
 			break;
 		case cmd_shutdown:
-			syslog(LOG_DEBUG, "Server shutting down...");
-			fpga.terminate = 1;
-			goto Error;
+			strcpy(errMsg, "Server shutting down...");
+			rep[0] = fpga.terminate = 1;
 			break;
 		case cmd_set_rate:
 			sprintf(errMsg, "Set polling rate %dms\n", cmd.data);
@@ -89,8 +88,9 @@ int main (void)
 			sprintf(errMsg, "Invalid request(%d)", cmd.mode);
 			break;
 		}
-		if (*errMsg)	syslog(LOG_DEBUG, errMsg);
+		if (*errMsg)		syslog(LOG_DEBUG, errMsg);
 		errChk(zmq_send(zmq.socCmd, (void *)rep, sizeof(rep), 0));
+		if (fpga.terminate)	goto Error;
 	}
 Error:
 	fpga_close(&fpga);
