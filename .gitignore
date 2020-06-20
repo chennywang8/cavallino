@@ -5,3 +5,5 @@ RemoteSystemsTempFiles
 nodejs/node_modules
 *.lvlps
 *.aliases
+*.exe
+*.o

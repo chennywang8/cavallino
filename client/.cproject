@@ -24,7 +24,7 @@
 					<folderInfo id="cdt.managedbuild.config.gnu.cygwin.so.debug.460418429." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.cygwin.so.debug.5036791" name="Cygwin GCC" nonInternalBuilderId="cdt.managedbuild.target.gnu.builder.cygwin.so.debug" superClass="cdt.managedbuild.toolchain.gnu.cygwin.so.debug">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.cygwin.so.debug.1447083093" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.cygwin.so.debug"/>
-							<builder buildPath="${workspace_loc:/client}/Debug" id="cdt.managedbuild.target.gnu.builder.cygwin.so.debug.1219180927" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.cygwin.so.debug"/>
+							<builder buildPath="${workspace_loc:/client}/build" id="cdt.managedbuild.target.gnu.builder.cygwin.so.debug.1219180927" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.cygwin.so.debug"/>
 							<tool id="cdt.managedbuild.tool.gnu.assembler.cygwin.so.debug.1030157204" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.cygwin.so.debug">
 								<option id="gnu.both.asm.option.include.paths.253422993" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.2010219713" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
