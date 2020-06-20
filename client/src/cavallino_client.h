@@ -33,9 +33,11 @@
 #define reportError()	if (error < 0)	sprintf(errorMsg, "%s->%s", __FUNCTION__, errMsg);
 
 #define ERRMSG_SIZE     512
+#define ENGINE_IP				"192.168.1.84"
 #define CAVALLINO_REQUESTER		"tcp://%s:14538"
 #define CAVALLINO_SUBSCRIBER	"tcp://%s:14537"
 #define CAVALLINO_FIFODATA		"tcp://%s:14535"
+
 //==============================================================================
 // Types
 typedef char 			ErrMsg[ERRMSG_SIZE];
@@ -47,6 +49,11 @@ typedef enum {
 	cmd_get_rate	= 3,
 	cmd_dma_fifo	= 4,
 } CMD_Mode;
+
+
+//==============================================================================
+// Static variables
+
 
 //==============================================================================
 // Static functions
