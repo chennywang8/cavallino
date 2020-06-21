@@ -48,30 +48,24 @@ Batch Build Debug = False
 [File 0001]
 Path = "/c/Dev/cavallino/client/src/cavallino_client.c"
 File Type = "CSource"
-Disk Date = 3675597998
+Disk Date = 3675599577
 In Projects = "1,"
-Source Window State = "1,146,146,146,12,12,12,0,0,0,0,0,0,0,0,0,28,0,146,12,401,735,1,0,"
+Source Window State = "1,30,30,30,69,69,69,0,0,0,0,0,0,0,0,0,12,0,30,69,401,735,1,0,"
 Window Top = 157
 Window Left = 74
-Window Z-Order = 1
+Window Z-Order = 2
 
 [File 0002]
 Path = "/c/Dev/cavallino/client/src/cavallino_client.h"
 File Type = "Include"
-Disk Date = 3675597642
+Disk Date = 3675599526
 In Projects = "1,"
-Source Window State = "1,12,12,12,12,12,12,0,0,0,0,0,0,0,0,0,0,0,12,12,401,735,1,0,"
+Source Window State = "1,17,17,17,49,49,49,0,0,0,0,0,0,0,0,0,0,0,17,49,401,735,1,0,"
 Window Top = 126
 Window Left = 58
-Window Z-Order = 3
+Window Z-Order = 1
 
 [File 0003]
-Path = "/c/Dev/vcpkg/installed/x86-windows/lib/libzmq-mt-4_3_3.lib"
-File Type = "Library"
-Disk Date = 3674647362
-In Projects = "1,"
-
-[File 0004]
 Path Line0001 = "/c/Program Files (x86)/National Instruments/Shared/MSDTRedistributables/SDKHeade"
 Path Line0002 = "rFiles/8.1/synchapi.h"
 File Type = "Include"
@@ -80,7 +74,13 @@ In Projects = ""
 Source Window State = "1,900,900,900,0,5,0,0,3,0,0,0,0,0,0,0,884,0,900,5,371,735,1,0,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 2
+Window Z-Order = 3
+
+[File 0004]
+Path = "/c/Dev/vcpkg/installed/x86-windows/lib/libzmq-mt-4_3_3.lib"
+File Type = "Library"
+Disk Date = 3674647362
+In Projects = "1,"
 
 [File 0005]
 Path = "/c/Dev/cavallino/client/cvi/libzmq-mt-4_3_3.dll"

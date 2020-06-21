@@ -12,8 +12,10 @@
 // Include files
 #ifdef _CVI_
 #include "windows.h"
+#define WaitSec(timeoutSec) 	Sleep(1000*(timeoutSec))
 #else
 #include <unistd.h>
+#define WaitSec(timeoutSec)		sleep(timeoutSec)
 #endif
 #include <stdlib.h>
 #include <string.h>
