@@ -1,9 +1,9 @@
 # Chenny Wang
 # --------- BUILD CFG ------------
 CC = /cygdrive/c/build/18.0/sysroots/i686-nilrtsdk-mingw32/usr/bin/arm-nilrt-linux-gnueabi/arm-nilrt-linux-gnueabi-gcc.exe
-SYSROOT = "C:\build\18.0\sysroots\cortexa9-vfpv3-nilrt-linux-gnueabi"
-LIBS	= -ldl -lpthread -lzmq
-CFLAGS  = -I../include -I../fpga -mfpu=vfp3 -mfloat-abi=softfp --sysroot=${SYSROOT} -w
+SYSROOT  = "C:\build\18.0\sysroots\cortexa9-vfpv3-nilrt-linux-gnueabi"
+LIBS	 = -ldl -lpthread -lzmq
+CFLAGS   = -I../include -I../fpga -mfpu=vfp3 -mfloat-abi=softfp --sysroot=${SYSROOT} -w
 
 # --------- FILES -----------------
 HEADERS  = $(wildcard ../include/*.h) $(wildcard ../fpga/*.h)
@@ -11,12 +11,12 @@ OBJ_DATA = $(patsubst %.c, %.o, $(wildcard ../src/*.c))
 
 # --------- TARGET CFG ------------
 # config for target connection
-TARGETIP= 192.168.1.84
-USERNAME= admin
-TARGET	= ${USERNAME}@${TARGETIP}:/home/${USERNAME}
+TARGETIP = 192.168.1.84
+USERNAME = admin
+TARGET	 = ${USERNAME}@${TARGETIP}:/home/${USERNAME}
 
 # ---------- MAKE ------------
-all = server
+all : server
 
 server: ${OBJ_DATA}
 	echo ${OBJ_DATA}

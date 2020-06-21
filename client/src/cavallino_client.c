@@ -29,6 +29,7 @@ static	MSG_ZMQ	*zmq 	= NULL;
 //==============================================================================
 // Static functions
 int client_packUInt(unsigned char *dataArray, unsigned int dataUnit);
+int client_waitSec(unsigned int timeoutSec);
 
 //==============================================================================
 // Global functions
@@ -41,11 +42,11 @@ int main(void) {
 	puts("start client...");
 	errChk(client_initialize(ENGINE_IP, errMsg));
 	errChk(client_request(cmd_start, NULL, &data, errMsg));
-	sleep(5);
+	client_waitSec(5);
 	errChk(client_request(cmd_set_rate, &rate, &data, errMsg));
-	sleep(5);
+	client_waitSec(5);
 	errChk(client_cmdDmaFifo(1, 3, 333, &data, errMsg));
-	sleep(5);
+	client_waitSec(5);
 Error:
 	errChk(client_request(cmd_shutdown, NULL, &data, errMsg));
 	client_close();
@@ -138,5 +139,15 @@ int client_packUInt(unsigned char *dataArray, unsigned int dataUnit) {
 	dataArray[1] = (dataUnit & 0x0000FF00U)>>8;
 	dataArray[2] = (dataUnit & 0x00FF0000U)>>16;
 	dataArray[3] = (dataUnit & 0xFF000000U)>>24;
+	return 0;
+}
+
+
+int client_waitSec(unsigned int timeoutSec) {
+#ifdef _CVI_
+	Sleep(1000*timeoutSec); // has to convert to mlisecond
+#else
+	sleep(timeoutSec);
+#endif
 	return 0;
 }

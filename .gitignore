@@ -7,3 +7,4 @@ nodejs/node_modules
 *.aliases
 *.exe
 *.o
+client/cvi/cvibuild.cvi_build/

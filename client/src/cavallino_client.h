@@ -2,7 +2,7 @@
  * cavallino_client.h
  *
  *  Created on: Jun 15, 2020
- *      Author: 15103
+ *      Author: Chenny Wang
  */
 
 #ifndef CAVALLINO_CLIENT_H_
@@ -10,7 +10,11 @@
 
 //==============================================================================
 // Include files
+#ifdef _CVI_
+#include "windows.h"
+#else
 #include <unistd.h>
+#endif
 #include <stdlib.h>
 #include <string.h>
 #include <zmq.h>
