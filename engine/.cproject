@@ -30,6 +30,7 @@
 								<option id="gnu.c.compiler.option.misc.other.2062189806" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 -mfpu=vfp3 -mfloat-abi=softfp --sysroot=&quot;C:\build\18.0\sysroots\cortexa9-vfpv3-nilrt-linux-gnueabi&quot;" valueType="string"/>
 								<option id="gnu.c.compiler.option.include.paths.1872778549" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;C:\build\18.0\sysroots\cortexa9-vfpv3-nilrt-linux-gnueabi\usr\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Dev\cavallino\visa&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/fpga}&quot;"/>
 								</option>
@@ -45,6 +46,10 @@
 									<listOptionValue builtIn="false" value="dl"/>
 									<listOptionValue builtIn="false" value="pthread"/>
 									<listOptionValue builtIn="false" value="zmq"/>
+									<listOptionValue builtIn="false" value="visa"/>
+								</option>
+								<option id="gnu.c.link.option.paths.72743679" superClass="gnu.c.link.option.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;C:\build\18.0\sysroots\cortexa9-vfpv3-nilrt-linux-gnueabi\usr\local\vxipnp\linux\lib&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.1148463063" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>

@@ -177,15 +177,15 @@ Error:
 int engine_getPowerSupplyName(const char *ipAddress, char errorMsg[]) {
 	int			error 			= 0;
 	ErrMsg		errMsg			= {0};
-	LAN_Device 	dev				= NULL;
+	VISA_Device dev				= NULL;
 	char 		status			= 0,
 				buffer[128] 	= {0};
 
-	errChk(LAN_FindDevice(&dev, ipAddress, 1, &status, errMsg));
-	errChk(LAN_IdentifyDevice(dev, buffer, 3000, &status, errMsg));
+	errChk(VISA_FindDevice(&dev, ipAddress, 1, &status, errMsg));
+	errChk(VISA_IdentifyDevice(dev, buffer, 3000, &status, errMsg));
 	syslog(LOG_INFO, buffer);
 Error:
-	LAN_Close(&dev, &status, errMsg);
+	VISA_Close(&dev, &status, errMsg);
 	reportError();
 	return error;
 }

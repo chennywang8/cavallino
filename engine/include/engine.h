@@ -15,7 +15,7 @@
 // Include files
 #include "cavallino_utility.h"
 #include "cavallino_fpga.h"
-#include "instrument_lan.h"
+#include "visa_utility.h"
 
 //==============================================================================
 // Constants
