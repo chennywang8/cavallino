@@ -11,7 +11,11 @@
 //==============================================================================
 // Include files
 #include "visa_utility.h"
-
+#ifdef _WINDOWS
+#define WaitTimeoutMs(ms) Sleep(ms)
+#else
+#define WaitTimeoutMs(ms) usleep(1000*(ms))
+#endif
 
 //==============================================================================
 // Constants
@@ -21,7 +25,7 @@
 
 //==============================================================================
 // Static global variables
-VISA_Device device_list = NULL; 
+VISA_Device device_list 	= NULL;
 
 //==============================================================================
 // Static functions
@@ -32,7 +36,8 @@ int VISA_InitializeDevice(VISA_Device *pDevice, const char *visa, char errorMsg[
 
 //==============================================================================
 // Global functions
-int VISA_FindDevice(VISA_Device *pDevice, const char *visa, char createIfNotExist, char *foundDevice, char errorMsg[])
+int VISA_FindDevice(VISA_Device *pDevice, const char *visa,
+		char createIfNotExist, char *foundDevice, char errorMsg[])
 {
 	int 			error 	= 0,
 					found 	= 0;
@@ -80,7 +85,7 @@ int VISA_FindDevice(VISA_Device *pDevice, const char *visa, char createIfNotExis
 		}
 	}
 Error:
-	if (foundDevice)	*foundDevice = (short) found;
+	if (foundDevice)	*foundDevice = (char) found;
 	reportError();
 	return error;	
 }
@@ -98,7 +103,7 @@ int VISA_QueryNumeric(VISA_Device device, const char *cmd, int waitMS,
 	//*data = NotANumber();
 	visaErrChk(device->instrHandle, viWrite(device->instrHandle,
 			(unsigned char *) cmd, (ViUInt32) strlen(cmd), VI_NULL));
-	sleep(waitMS);
+	WaitTimeoutMs(waitMS);
 	visaErrChk(device->instrHandle, viRead(device->instrHandle,
 			buf, (ViUInt32) VISA_BUFFER_SIZE, &numCount));
 	if (numCount == 0) {
@@ -203,7 +208,7 @@ int VISA_IdentifyDevice(VISA_Device device, char *deviceName,
 	*identified = 0;
 	visaErrChk(device->instrHandle, viWrite(device->instrHandle,
 			(unsigned char *) cmd, (ViUInt32) strlen(cmd), VI_NULL));
-	sleep(waitMS);
+	WaitTimeoutMs(waitMS);
 	visaErrChk(device->instrHandle, viRead(device->instrHandle,
 			(unsigned char *) buf, (ViUInt32) VISA_BUFFER_SIZE, &numCount));
 	

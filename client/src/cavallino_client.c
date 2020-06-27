@@ -42,6 +42,8 @@ int main(void) {
 	errChk(client_initialize(ENGINE_IP, errMsg));
 	errChk(client_request(cmd_start, NULL, &data, errMsg));
 	WaitSec(5);
+	errChk(client_request(cmd_query_instr, NULL, &data, errMsg));
+	WaitSec(1);
 	errChk(client_request(cmd_set_rate, &rate, &data, errMsg));
 	WaitSec(5);
 	errChk(client_cmdDmaFifo(1, 3, 333, &data, errMsg));

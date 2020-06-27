@@ -182,7 +182,7 @@ int engine_getPowerSupplyName(const char *ipAddress, char errorMsg[]) {
 				buffer[128] 	= {0};
 
 	errChk(VISA_FindDevice(&dev, ipAddress, 1, &status, errMsg));
-	errChk(VISA_IdentifyDevice(dev, buffer, 3000, &status, errMsg));
+	errChk(VISA_IdentifyDevice(dev, buffer, 1000, &status, errMsg));
 	syslog(LOG_INFO, buffer);
 Error:
 	VISA_Close(&dev, &status, errMsg);

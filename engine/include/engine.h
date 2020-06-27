@@ -24,7 +24,7 @@
 #define CAVALLINO_FIFODATA		"tcp://*:14535"
 
 #define BUFFER_SIZE				10
-#define INSTRUMENT_IP_ADDRESS	"192.168.1.90"
+#define INSTRUMENT_IP_ADDRESS	"TCPIP::192.168.1.77::inst0::INSTR"
 
 //==============================================================================
 // Types

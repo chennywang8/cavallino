@@ -12,7 +12,7 @@ OBJ_DATA = $(patsubst %.c, %.o, $(wildcard ../src/*.c))
 
 # --------- TARGET CFG ------------
 # config for target connection
-TARGETIP = 192.168.1.84
+TARGETIP = 192.168.1.92
 USERNAME = admin
 TARGET	 = ${USERNAME}@${TARGETIP}:/home/${USERNAME}
 
